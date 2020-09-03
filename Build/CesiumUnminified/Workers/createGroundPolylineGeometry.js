@@ -21,7 +21,7 @@
  * See https://github.com/CesiumGS/cesium/blob/master/LICENSE.md for full licensing details.
  */
 
-define(['./when-54c2dc71', './Check-6c0211bc', './Math-1124a290', './Cartesian2-36f5627e', './Transforms-24764bd0', './RuntimeError-2109023a', './WebGLConstants-76bb35d1', './ComponentDatatype-a26dd044', './GeometryAttribute-95a8e01e', './EncodedCartesian3-713823b7', './IntersectionTests-17311567', './Plane-d6bd5eb7', './WebMercatorProjection-3adee0e0', './arrayRemoveDuplicates-0263f42c', './ArcType-dc1c5aee', './EllipsoidRhumbLine-f66c71e3', './EllipsoidGeodesic-8db9ab41'], function (when, Check, _Math, Cartesian2, Transforms, RuntimeError, WebGLConstants, ComponentDatatype, GeometryAttribute, EncodedCartesian3, IntersectionTests, Plane, WebMercatorProjection, arrayRemoveDuplicates, ArcType, EllipsoidRhumbLine, EllipsoidGeodesic) { 'use strict';
+define(['./when-54c2dc71', './Check-6c0211bc', './Math-1124a290', './Cartesian2-33d2657c', './Transforms-033fcd04', './RuntimeError-2109023a', './WebGLConstants-76bb35d1', './ComponentDatatype-a26dd044', './GeometryAttribute-7249cf27', './EncodedCartesian3-6c97231d', './IntersectionTests-3ac13d3e', './Plane-2f5e9dda', './WebMercatorProjection-054890ef', './arrayRemoveDuplicates-0263f42c', './ArcType-dc1c5aee', './EllipsoidRhumbLine-5f1492e5', './EllipsoidGeodesic-0f41968b'], function (when, Check, _Math, Cartesian2, Transforms, RuntimeError, WebGLConstants, ComponentDatatype, GeometryAttribute, EncodedCartesian3, IntersectionTests, Plane, WebMercatorProjection, arrayRemoveDuplicates, ArcType, EllipsoidRhumbLine, EllipsoidGeodesic) { 'use strict';
 
   /**
    * A tiling scheme for geometry referenced to a simple {@link GeographicProjection} where
