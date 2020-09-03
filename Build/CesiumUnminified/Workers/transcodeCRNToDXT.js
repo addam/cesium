@@ -136,6 +136,34 @@ define(['./when-54c2dc71', './RuntimeError-2109023a', './WebGLConstants-76bb35d1
   /**
     @private
   */
+  PixelDatatype.toWebGLConstant = function (pixelDatatype, context) {
+    switch (pixelDatatype) {
+      case PixelDatatype.UNSIGNED_BYTE:
+        return WebGLConstants.WebGLConstants.UNSIGNED_BYTE;
+      case PixelDatatype.UNSIGNED_SHORT:
+        return WebGLConstants.WebGLConstants.UNSIGNED_SHORT;
+      case PixelDatatype.UNSIGNED_INT:
+        return WebGLConstants.WebGLConstants.UNSIGNED_INT;
+      case PixelDatatype.FLOAT:
+        return WebGLConstants.WebGLConstants.FLOAT;
+      case PixelDatatype.HALF_FLOAT:
+        return context.webgl2
+          ? WebGLConstants.WebGLConstants.HALF_FLOAT
+          : WebGLConstants.WebGLConstants.HALF_FLOAT_OES;
+      case PixelDatatype.UNSIGNED_INT_24_8:
+        return WebGLConstants.WebGLConstants.UNSIGNED_INT_24_8;
+      case PixelDatatype.UNSIGNED_SHORT_4_4_4_4:
+        return WebGLConstants.WebGLConstants.UNSIGNED_SHORT_4_4_4_4;
+      case PixelDatatype.UNSIGNED_SHORT_5_5_5_1:
+        return WebGLConstants.WebGLConstants.UNSIGNED_SHORT_5_5_5_1;
+      case PixelDatatype.UNSIGNED_SHORT_5_6_5:
+        return PixelDatatype.UNSIGNED_SHORT_5_6_5;
+    }
+  };
+
+  /**
+    @private
+  */
   PixelDatatype.isPacked = function (pixelDatatype) {
     return (
       pixelDatatype === PixelDatatype.UNSIGNED_INT_24_8 ||
@@ -550,6 +578,57 @@ define(['./when-54c2dc71', './RuntimeError-2109023a', './WebGLConstants-76bb35d1
       }
     }
     return flipped;
+  };
+
+  /**
+   * @private
+   */
+  PixelFormat.toInternalFormat = function (pixelFormat, pixelDatatype, context) {
+    // WebGL 1 require internalFormat to be the same as PixelFormat
+    if (!context.webgl2) {
+      return pixelFormat;
+    }
+
+    // Convert pixelFormat to correct internalFormat for WebGL 2
+    if (pixelFormat === PixelFormat.DEPTH_STENCIL) {
+      return WebGLConstants.WebGLConstants.DEPTH24_STENCIL8;
+    }
+
+    if (pixelFormat === PixelFormat.DEPTH_COMPONENT) {
+      if (pixelDatatype === PixelDatatype$1.UNSIGNED_SHORT) {
+        return WebGLConstants.WebGLConstants.DEPTH_COMPONENT16;
+      } else if (pixelDatatype === PixelDatatype$1.UNSIGNED_INT) {
+        return WebGLConstants.WebGLConstants.DEPTH_COMPONENT24;
+      }
+    }
+
+    if (pixelDatatype === PixelDatatype$1.FLOAT) {
+      switch (pixelFormat) {
+        case PixelFormat.RGBA:
+          return WebGLConstants.WebGLConstants.RGBA32F;
+        case PixelFormat.RGB:
+          return WebGLConstants.WebGLConstants.RGB32F;
+        case PixelFormat.RG:
+          return WebGLConstants.WebGLConstants.RG32F;
+        case PixelFormat.R:
+          return WebGLConstants.WebGLConstants.R32F;
+      }
+    }
+
+    if (pixelDatatype === PixelDatatype$1.HALF_FLOAT) {
+      switch (pixelFormat) {
+        case PixelFormat.RGBA:
+          return WebGLConstants.WebGLConstants.RGBA16F;
+        case PixelFormat.RGB:
+          return WebGLConstants.WebGLConstants.RGB16F;
+        case PixelFormat.RG:
+          return WebGLConstants.WebGLConstants.RG16F;
+        case PixelFormat.R:
+          return WebGLConstants.WebGLConstants.R16F;
+      }
+    }
+
+    return pixelFormat;
   };
 
   var PixelFormat$1 = Object.freeze(PixelFormat);
