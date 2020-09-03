@@ -541,6 +541,9 @@ function createUniformMap(stage) {
     czm_selectedIdTextureStep: function () {
       return 1.0 / stage._selectedIdTexture.width;
     },
+    czm_groupDecoder: function () {
+      return stage._groupDecoder;
+    },
   });
 }
 
@@ -563,6 +566,7 @@ function createDrawCommand(stage, context) {
       "uniform sampler2D czm_idTexture; \n" +
       "uniform sampler2D czm_selectedIdTexture; \n" +
       "uniform float czm_selectedIdTextureStep; \n" +
+      "uniform vec4 czm_groupDecoder; \n" +
       "varying vec2 v_textureCoordinates; \n" +
       "bool czm_selected(vec2 offset) \n" +
       "{ \n" +
@@ -584,6 +588,14 @@ function createDrawCommand(stage, context) {
       "{ \n" +
       "    return czm_selected(vec2(0.0)); \n" +
       "} \n\n" +
+      "int czm_pick_group(vec2 offset) { \n" +
+      "    vec4 id = texture2D(czm_idTexture, v_textureCoordinates + offset); \n" +
+      "    float result = dot(id, czm_groupDecoder); \n" +
+      "    return int(result); \n" +
+      "} \n" +
+      "int czm_pick_group() { \n" +
+      "    return czm_pick_group(vec2(0.0)); \n" +
+      "} \n" +
       fs;
   }
 
@@ -898,6 +910,15 @@ PostProcessStage.prototype.update = function (context, useLogDepth) {
   this._parentSelectedLength = defined(this._parentSelected)
     ? this._parentSelected.length
     : 0;
+  function shiftedByte(shift) {
+    return shift < context._groupByteLength ? 255 << (8 * shift) : 0;
+  }
+  this._groupDecoder = new Cesium.Cartesian4(
+    shiftedByte(3),
+    shiftedByte(2),
+    shiftedByte(1),
+    shiftedByte(0)
+  );
 
   createSelectedTexture(this, context);
   createUniformMap(this);
