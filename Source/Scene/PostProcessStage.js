@@ -1,6 +1,7 @@
 import BoundingRectangle from "../Core/BoundingRectangle.js";
 import Check from "../Core/Check.js";
 import Color from "../Core/Color.js";
+import Cartesian4 from "../Core/Cartesian4.js";
 import combine from "../Core/combine.js";
 import createGuid from "../Core/createGuid.js";
 import defaultValue from "../Core/defaultValue.js";
@@ -913,7 +914,7 @@ PostProcessStage.prototype.update = function (context, useLogDepth) {
   function shiftedByte(shift) {
     return shift < context._groupByteLength ? 255 << (8 * shift) : 0;
   }
-  this._groupDecoder = new Cesium.Cartesian4(
+  this._groupDecoder = new Cartesian4(
     shiftedByte(3),
     shiftedByte(2),
     shiftedByte(1),
