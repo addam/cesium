@@ -192,7 +192,7 @@ gulp.task("build", function () {
 });
 
 gulp.task("build-watch", function () {
-  return gulp.watch(watchedFiles, gulp.series("build"));
+  return gulp.watch(watchedFiles, { usePolling: true }, gulp.series("build"));
 });
 
 gulp.task("build-ts", function () {
