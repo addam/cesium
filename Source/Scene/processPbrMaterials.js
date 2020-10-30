@@ -897,7 +897,9 @@ function generateTechnique(
     fragmentShader += "#endif \n";
     fragmentShader += "    vec3 l = normalize(czm_lightDirectionEC);\n";
     fragmentShader += "    vec3 h = normalize(v + l);\n";
-    fragmentShader += "    float NdotL = clamp(dot(n, l), 0.001, 1.0);\n";
+    fragmentShader += "    float NdotL = clamp(dot(n, l), -1.0, 1.0);\n";
+    fragmentShader +=
+      "    if (NdotL < 0.03) { NdotL = 0.8 * (1.0 + NdotL); }\n";
     fragmentShader += "    float NdotV = abs(dot(n, v)) + 0.001;\n";
     fragmentShader += "    float NdotH = clamp(dot(n, h), 0.0, 1.0);\n";
     fragmentShader += "    float LdotH = clamp(dot(l, h), 0.0, 1.0);\n";
