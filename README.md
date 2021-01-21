@@ -2,6 +2,21 @@
 <img src="https://github.com/CesiumGS/cesium/wiki/logos/Cesium_Logo_Color.jpg" width="50%" />
 </p>
 
+This is a patched version of Cesium 1.73 for Luucy.
+It was created by the following commands:
+
+```
+git checkout -b lu-2724-update-cesium-173;
+git fetch https://github.com/CesiumGS/cesium.git 1.73 --depth=1;
+git branch -f upstream-cesium $(git commit-tree FETCH_HEAD^{tree} -p upstream-cesium -m "shallow copy of upstream Cesium as of 1.73");
+git reset --hard upstream-cesium;
+git merge master;
+
+gulp combine minifyRelease;
+git add -f Build/Cesium Build/CesiumUnminified;
+git commit -m "Rebuild";
+```
+
 [![Build Status](https://travis-ci.org/CesiumGS/cesium.svg?branch=master)](https://travis-ci.org/CesiumGS/cesium)
 [![npm](https://img.shields.io/npm/v/cesium)](https://www.npmjs.com/package/cesium)
 [![Docs](https://img.shields.io/badge/docs-online-orange.svg)](https://cesium.com/docs/)
